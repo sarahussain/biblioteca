@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+
+    <TextView
+        android:id="@+id/txtlibri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5px"
+        android:text="Id"
+        android:textStyle="bold"
+        android:textColor="#ff3c3c"
+        android:textSize="16sp" >
+    </TextView>
+
+
+    <TextView
+        android:id="@+id/txttitolo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5px"
+        android:text="Titolo"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtautore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5px"
+        android:text="Autore"
+        android:textStyle="bold|italic"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtisbn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5px"
+        android:text="Isbn"
+        android:textStyle="bold|italic"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtdisp"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginTop="8px"
+        android:text="Disponibilità"
+        android:textStyle="bold|italic"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="16sp" >
+    </TextView>
+
+</LinearLayout>
