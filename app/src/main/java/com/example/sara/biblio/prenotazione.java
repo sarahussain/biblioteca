@@ -1,134 +1,123 @@
 package com.example.sara.biblio;
 
-import android.os.AsyncTask;
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class prenotazione extends AppCompatActivity {
+public class prenotazione extends Activity implements OnItemSelectedListener{
 
     ConnectionClass connectionClass;
-    EditText aut,lib;
-    Button prenota;
-    ProgressBar pbar;
-    ResultSet rs;
-    int id =0;
+    EditText username;
+    ResultSet rs,rt;
+
 
     @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_prenotazione);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_prenotazione);
+        connectionClass = new ConnectionClass();
+        // Spinner element
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        spinner.setOnItemSelectedListener(this);
 
 
 
-            connectionClass = new ConnectionClass();
-            prenota = (Button) findViewById(R.id.button);
-            aut = (EditText)findViewById(R.id.autore);
-            lib = (EditText)findViewById(R.id.titolo);
-            pbar = (ProgressBar) findViewById(R.id.progressBar);
+        try {
+            Connection con = connectionClass.CONN();
+            if (con == null) {
+                System.out.println("Errore nella connessione");
+            } else {
+                List titoli = new ArrayList();
 
+                String query = "select * from libri";
+                Statement st = con.createStatement();
+                rs = st.executeQuery(query);
+                while(rs.next()){
 
-            prenota.setOnClickListener(new View.OnClickListener() {
+                    String [] id = {rs.getString("titolo")} ;
 
+                    titoli.add(Arrays.toString(id));
 
-                    @Override
-                    public void onClick(View v) {
-                        prenotazione.DoLogin doLogin = new prenotazione.DoLogin();
-                        doLogin.execute("");
-
-                    }
-                });
-
-            }
-
-        public class DoLogin extends AsyncTask<String,String,String>
-        {
-            String z = "";
-            Boolean isSuccess = false;
-
-
-            String autore = aut.getText().toString();
-            String titolo = lib.getText().toString();
-
-
-            @Override
-            protected void onPreExecute() {
-                pbar.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            protected void onPostExecute(String r) {
-                pbar.setVisibility(View.GONE);
-                Toast.makeText(prenotazione.this,r,Toast.LENGTH_SHORT).show();
-
-                if(isSuccess) {
-                    setContentView(R.layout.prenotazion);
                 }
 
+                ArrayAdapter NoCoreAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, titoli);
+                NoCoreAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                // attaching data adapter to spinner
+                spinner.setAdapter(NoCoreAdapter);
             }
-
-            @Override
-            protected String doInBackground(String... params) {
-                if(autore.trim().equals("")|| titolo.trim().equals(""))
-                    z = "Per favore inserisci User Id e Password";
-                else
-                {
-                    try {
-                        Connection con = connectionClass.CONN();
-                        if (con == null) {
-                            z = "Errore nella connessione con SQL server";
-                        } else {
-                            String query = "select * from libri where titolo='" + titolo+ "' and autore='" + autore+ "'";
-                            Statement statement = con.createStatement();
-                            rs = statement.executeQuery(query);
-
-                            if (rs.next()){
-
-                                id = Integer.parseInt(rs.getString("id").toString());
-                                String query_1 = "insert into prenotazione(id_libro)" + "values ('"+ id +"')";
-                                Statement st = con.createStatement();
-                                int rt = st.executeUpdate(query_1);
-
-                                if(rt > 0){
-
-                                    z= "Prenotato con successo";
-                                    isSuccess=true;
-
-                                }
+        }catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
 
 
-                                else{
-                                    z="Insuccesso";
-                                    isSuccess=false;
-                                }
-                            }
 
+    }
 
-                            else
-                            {
-                                z = "Insuccesso";
-                                isSuccess = false;
-                            }
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        String item = parent.getItemAtPosition(position).toString().replace("[", "").replace("\"", "").replace("]", "");
+        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
 
+        try {
+
+            username = (EditText) findViewById(R.id.editText5);
+            String user = username.getText().toString();
+            int id_libro=0,id_utente=0;
+            Connection con = connectionClass.CONN();
+            if (con == null) {
+                System.out.println("Errore nella connessione");
+            } else {
+
+                String quer ="select * from libri where titolo='" + item + "'";
+                Statement sp = con.createStatement();
+                rs = sp.executeQuery(quer);
+                if(rs.next()){
+                    id_libro = Integer.parseInt(rs.getString("id").toString());
+                    String que = "select * from utenti where username='"+user+"'";
+                    Statement s=con.createStatement();
+                    rt=s.executeQuery(que);
+                    if(rt.next()) {
+                        id_utente = Integer.parseInt(rt.getString("id").toString());
+                        String query = "Insert into prenotazione(id_libro,id_utente)" + "values('" + id_libro + "','" + id_utente + "')";
+                        Statement st = con.createStatement();
+                        int rt = st.executeUpdate(query);
+                        if (rt > 0) {
+
+                            setContentView(R.layout.prenotazion);
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        isSuccess = false;
-                        z = "Exceptions";
-                    }
                 }
-                return z;
+             else{
+                    System.out.println("Errore nell'insrire dati");
+                }
+
+
             }
-        }
+    }catch (SQLException e)
+    {
+        e.printStackTrace();
     }
 
 
+
+}
+    public void onNothingSelected(AdapterView<?> arg0) {
+        // TODO Auto-generated method stub
+    }
+}
