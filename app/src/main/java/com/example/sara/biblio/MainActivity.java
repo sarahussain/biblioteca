@@ -21,6 +21,7 @@ public class MainActivity extends Activity {
     EditText edtuserid,edtpass;
     Button btnlogin;
     ProgressBar pbbar;
+    int id=0;
 
 
     @Override
@@ -83,15 +84,16 @@ public class MainActivity extends Activity {
                 try {
                     Connection con = connectionClass.CONN();
                     if (con == null) {
-                        z = "Errore nella connessione con SQL server";
+                        z = "Errore nella connessione";
                     } else {
                         String query = "select * from utenti where username='" + userid + "' and pass='" + password + "'";
                         Statement stmt = con.createStatement();
                         ResultSet rs = stmt.executeQuery(query);
 
+
                         if(rs.next())
                         {
-
+                            id = Integer.parseInt(rs.getString("id").toString());
                             z = "Login Avvenuto con successo";
                             isSuccess=true;
                         }

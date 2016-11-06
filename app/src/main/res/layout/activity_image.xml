@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1abc9c"
+    android:orientation="vertical"
+    android:weightSum="11" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:padding="10dp"
+        android:text="ANDROID FETCH IMAGE"
+        android:textColor="#fff"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/edtid"
+        android:layout_width="256dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="@android:drawable/editbox_background_normal"
+        android:hint="ENTER ID HERE"
+        android:textColor="#000"
+        android:typeface="monospace" />
+
+    <ProgressBar
+        android:id="@+id/pbbar"
+        android:layout_width="20dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="1" />
+
+
+
+    <Button
+        android:id="@+id/btnfetch"
+        android:layout_width="256dp"
+        android:layout_height="0dp"
+        android:background="@android:drawable/btn_default"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text="FETCH" />
+
+    <ImageView
+        android:id="@+id/imageview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6" />
+
+    <TextView
+        android:id="@+id/lblpath"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_weight="2"
+        android:padding="10dp"
+        android:text="v xcvcxvcvcvxcvxcvxcvxcvxcvxc v xcvcxvcvcvxcvxcvxcvxcvxcvxc v xcvcxvcvcvxcvxcvxcvxcvxcvxc"
+        android:textColor="#fff"
+        android:textSize="13sp" />
+
+</LinearLayout>

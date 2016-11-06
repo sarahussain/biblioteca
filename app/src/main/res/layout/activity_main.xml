@@ -50,23 +50,6 @@
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimary"
-
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:padding="10dp"
-        android:id="@+id/btnlogin"
-        android:text="Login"
-        android:layout_marginLeft="11dp"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="61dp"
-        android:layout_below="@+id/edtpass"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -81,4 +64,21 @@
         android:layout_alignLeft="@+id/btnlogin"
         android:layout_alignStart="@+id/btnlogin"
         android:layout_marginBottom="51dp" />
+
+    <Button
+        android:layout_width="180dp"
+        android:textColor="@color/colorPrimary"
+
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:id="@+id/btnlogin"
+        android:layout_marginTop="27dp"
+        android:background="@mipmap/log"
+        android:layout_height="180dp"
+        android:layout_below="@+id/edtpass"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
 </RelativeLayout>

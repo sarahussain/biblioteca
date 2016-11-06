@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ public class prenotazione extends Activity implements OnItemSelectedListener{
 
     ConnectionClass connectionClass;
     EditText username;
+    Button b2;
     ResultSet rs,rt;
 
 
@@ -31,6 +33,7 @@ public class prenotazione extends Activity implements OnItemSelectedListener{
         setContentView(R.layout.activity_prenotazione);
         connectionClass = new ConnectionClass();
         // Spinner element
+        b2= (Button)findViewById(R.id.button2);
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(this);
 
@@ -71,48 +74,53 @@ public class prenotazione extends Activity implements OnItemSelectedListener{
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
-        String item = parent.getItemAtPosition(position).toString().replace("[", "").replace("\"", "").replace("]", "");
+        final String item = parent.getItemAtPosition(position).toString().replace("[", "").replace("\"", "").replace("]", "");
         Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
 
-        try {
+                    username = (EditText) findViewById(R.id.editText5);
+                    String user = username.getText().toString();
+                    int id_libro=0,id_utente=0;
+                    Connection con = connectionClass.CONN();
+                    if (con == null) {
+                        System.out.println("Errore nella connessione");
+                    } else {
 
-            username = (EditText) findViewById(R.id.editText5);
-            String user = username.getText().toString();
-            int id_libro=0,id_utente=0;
-            Connection con = connectionClass.CONN();
-            if (con == null) {
-                System.out.println("Errore nella connessione");
-            } else {
+                        String quer ="select * from libri where titolo='" + item + "'";
+                        Statement sp = con.createStatement();
+                        rs = sp.executeQuery(quer);
+                        if(rs.next()){
+                            id_libro = Integer.parseInt(rs.getString("id").toString());
+                            String que = "select * from utenti where username='"+user+"'";
+                            Statement s=con.createStatement();
+                            rt=s.executeQuery(que);
+                            if(rt.next()) {
+                                id_utente = Integer.parseInt(rt.getString("id").toString());
+                                String query = "Insert into prenotazione(id_libro,id_utente,data)" + "values('" + id_libro + "','"+id_utente+"',GETDATE())";
+                                Statement st = con.createStatement();
+                                int rt = st.executeUpdate(query);
+                                if (rt > 0) {
 
-                String quer ="select * from libri where titolo='" + item + "'";
-                Statement sp = con.createStatement();
-                rs = sp.executeQuery(quer);
-                if(rs.next()){
-                    id_libro = Integer.parseInt(rs.getString("id").toString());
-                    String que = "select * from utenti where username='"+user+"'";
-                    Statement s=con.createStatement();
-                    rt=s.executeQuery(que);
-                    if(rt.next()) {
-                        id_utente = Integer.parseInt(rt.getString("id").toString());
-                        String query = "Insert into prenotazione(id_libro,id_utente)" + "values('" + id_libro + "','" + id_utente + "')";
-                        Statement st = con.createStatement();
-                        int rt = st.executeUpdate(query);
-                        if (rt > 0) {
-
-                            setContentView(R.layout.prenotazion);
+                                    setContentView(R.layout.prenotazion);
+                                }
+                            }
                         }
+                        else{
+                            System.out.println("Errore nell'insrire dati");
+                        }
+
+
                     }
+                }catch (SQLException e)
+                {
+                    e.printStackTrace();
                 }
-             else{
-                    System.out.println("Errore nell'insrire dati");
-                }
-
-
             }
-    }catch (SQLException e)
-    {
-        e.printStackTrace();
-    }
+        });
+
 
 
 

@@ -8,41 +8,44 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/book"
+    android:background="@drawable/mainpage"
     tools:context="com.example.sara.biblio.main_page">
 
-    <Button
-        android:text="Prenota"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:id="@+id/prenota"
-        android:layout_below="@+id/catalogo"
-        android:layout_alignLeft="@+id/catalogo"
-        android:layout_alignStart="@+id/catalogo"
-        android:background="?attr/colorControlHighlight" />
 
     <Button
-        android:text="Catalogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="79dp"
-        android:layout_marginStart="79dp"
-        android:layout_marginTop="86dp"
         android:id="@+id/catalogo"
+        android:background="@mipmap/ca"
+        android:elevation="1dp"
+        android:textColor="@android:color/white"
+        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="?attr/colorControlHighlight" />
+        android:layout_marginTop="19dp"
+        android:layout_width="135dp"
+        android:layout_height="135dp" />
 
     <Button
-        android:text="Feedback"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:id="@+id/prenota"
+        android:background="@mipmap/pren"
+        android:layout_below="@+id/catalogo"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_width="135dp"
+        android:layout_height="135dp" />
+
+    <Button
         android:id="@+id/feedback"
+        android:background="@mipmap/fee"
+        android:layout_height="135dp"
+        android:layout_width="135dp"
         android:layout_below="@+id/prenota"
-        android:layout_alignLeft="@+id/prenota"
-        android:layout_alignStart="@+id/prenota"
-        android:background="?attr/colorControlHighlight" />
+        android:layout_alignLeft="@+id/catalogo"
+        android:layout_alignStart="@+id/catalogo"
+        android:layout_marginTop="13dp" />
+
+
 </RelativeLayout>
